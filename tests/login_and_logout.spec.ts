@@ -1,17 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage, DashboardPage } from '../src/pages';
-
-// Load credentials from environment
-const getCredentials = () => {
-  const username = process.env.QA_USER;
-  const password = process.env.QA_PASS;
-
-  if (!username || !password) {
-    throw new Error('QA_USER and QA_PASS environment variables must be set');
-  }
-
-  return { username, password };
-};
+import { getCredentials } from '../src/utils';
 
 test.describe('Authentication', () => {
   test('should login successfully and see dashboard', async ({ page }) => {
@@ -19,11 +8,7 @@ test.describe('Authentication', () => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
 
-    await loginPage.navigate();
-    await loginPage.dismissPopup();
-    await loginPage.fillEmail(username);
-    await loginPage.fillPassword(password);
-    await loginPage.clickSignIn();
+    await loginPage.login(username, password);
 
     await dashboardPage.expectDashboardUrl();
     await dashboardPage.expectDashboardVisible();
@@ -50,7 +35,7 @@ test.describe('Authentication', () => {
     const newLoginPage = new LoginPage(newPage);
     const newDashboardPage = new DashboardPage(newPage);
 
-    await newLoginPage.goto('/');
+    await newPage.goto('/', { waitUntil: 'domcontentloaded' });
     await newDashboardPage.expectDashboardVisible();
     expect(await newLoginPage.isLoginFormVisible()).toBe(false);
 

@@ -5,7 +5,6 @@ import { BasePage } from './BasePage';
  * Page object for the login page.
  */
 export class LoginPage extends BasePage {
-  // Locators
   private readonly emailInput = this.page.getByLabel('Email');
   private readonly passwordInput = this.page.getByLabel('Password');
   private readonly signInButton = this.page.getByRole('button', { name: 'Sign in' });
@@ -17,14 +16,7 @@ export class LoginPage extends BasePage {
   }
 
   /**
-   * Navigate to login page
-   */
-  async navigate() {
-    await this.goto('/');
-  }
-
-  /**
-   * Dismiss cookie/consent popup if present
+   * Dismiss cookie/consent popup
    */
   async dismissPopup() {
     await expect(this.allowAllButton.or(this.okButton)).toBeVisible();
@@ -39,36 +31,15 @@ export class LoginPage extends BasePage {
   }
 
   /**
-   * Fill in email field
-   */
-  async fillEmail(email: string) {
-    await this.emailInput.fill(email);
-  }
-
-  /**
-   * Fill in password field
-   */
-  async fillPassword(password: string) {
-    await this.passwordInput.fill(password);
-  }
-
-  /**
-   * Click sign in button
-   */
-  async clickSignIn() {
-    await this.signInButton.click();
-  }
-
-  /**
    * Perform complete login flow
    */
   async login(email: string, password: string) {
-    await this.navigate();
+    await this.page.goto('/', { waitUntil: 'domcontentloaded' });
     await this.dismissPopup();
-    await this.fillEmail(email);
-    await this.fillPassword(password);
-    await this.clickSignIn();
-    await this.waitForLoad();
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.signInButton.click();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   /**

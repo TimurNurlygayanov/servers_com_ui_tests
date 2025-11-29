@@ -89,7 +89,7 @@ src/
     DashboardPage.ts         - Dashboard page interactions
     SideMenuComponent.ts     - Side menu navigation component
     index.ts                 - Barrel export
-  utils.ts                   - Shared helper functions
+  utils.ts                   - Shared test utilities
   menu-data.ts               - Menu structure definition
 scripts/
   pack-screenshots.sh        - Pack screenshots into encrypted archive
@@ -137,10 +137,16 @@ Several issues were found while creating automated tests:
 
 2. **Responsive design**: WebUI is not properly adapted for mobile and small desktop screens. UI elements overflow their containers and extend outside the viewport.
 
+[<img src="./bugs/mobile_ux.jpeg" height="250"/>](./bugs/mobile_ux.jpeg)
+
 3. **Duplicate headers**: Many pages have redundant headers. Consider removing large headers on pages with only one content block.
+
+[<img src="./bugs/duplicated_headers.png" height="250"/>](./bugs/duplicated_headers.png)
 
 4. **JS errors**: Multiple JavaScript errors appear during test execution, mostly related to external service integrations.
 
 5. **Menu overflow**: The "Reports" menu item becomes inaccessible on desktop when all other expandable menu items are open (menu has a height limit that hides overflow items).
 
-6. **Inconsistent naming**: Sub-menu items use inconsistent capitalization - "Cloud Servers" vs "Cloud storage". Also, "Healthchecks" is written without a space - is this intentional?
+[<img src="./bugs/menu_items.png" height="250" />](./bugs/menu_items.png)
+
+7. **Inconsistent naming**: Sub-menu items use inconsistent capitalization - "Cloud Servers" vs "Group invoices" and "Top up balance". Also, "Healthchecks" is written without a space - is this intentional?

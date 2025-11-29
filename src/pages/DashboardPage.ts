@@ -5,7 +5,6 @@ import { BasePage } from './BasePage';
  * Page object for the dashboard page.
  */
 export class DashboardPage extends BasePage {
-  // Locators
   private readonly dashboardText = this.page.getByText('Dashboard');
   private readonly topUpButton = this.page.getByRole('button', { name: 'Top up' });
   private readonly userMenuButton = this.page.locator(
@@ -26,31 +25,19 @@ export class DashboardPage extends BasePage {
   }
 
   /**
-   * Dismiss NPS survey if present
+   * Perform logout (dismisses NPS survey if present)
    */
-  async dismissNpsSurvey() {
+  async logout() {
+    // Dismiss NPS survey if present
     if (await this.isVisible(this.okButton)) {
       await this.okButton.click();
       await expect(this.okButton).not.toBeVisible();
     }
-  }
 
-  /**
-   * Open user menu dropdown
-   */
-  async openUserMenu() {
     await expect(this.userMenuButton).toBeVisible();
     await this.userMenuButton.click();
-  }
-
-  /**
-   * Perform logout
-   */
-  async logout() {
-    await this.dismissNpsSurvey();
-    await this.openUserMenu();
     await this.logoutButton.click();
-    await this.waitForLoad();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   /**
@@ -68,7 +55,7 @@ export class DashboardPage extends BasePage {
   }
 
   /**
-   * Assert dashboard URL
+   * Assert URL contains dashboard
    */
   async expectDashboardUrl() {
     await expect(this.page).toHaveURL(/.*dashboard.*/);

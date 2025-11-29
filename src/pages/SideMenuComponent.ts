@@ -104,7 +104,7 @@ export class SideMenuComponent extends BasePage {
       await this.navigateDesktopLarge(menuNames, subItemNames);
     }
 
-    await this.waitForLoad();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   /**
