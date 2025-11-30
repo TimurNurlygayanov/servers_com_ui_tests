@@ -12,7 +12,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : parseInt(process.env.WORKERS || '1', 10),
   reporter: 'html',
-  timeout: 1200000,
+  timeout: 120000,
   expect: {
     timeout: 30000,
     toHaveScreenshot: {

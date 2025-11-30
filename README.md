@@ -52,38 +52,37 @@ If you don't have the password, create your own reference screenshots (see "How 
 
 # How To Run
 
-Run all UI tests in a desktop browser (good for debugging and demo):
+Three viewport modes are available:
+- `--project=desktop-large` - 1400x800 (recommended for most tests)
+- `--project=desktop-small` - 800x700 (icon-only sidebar)
+- `--project=mobile` - mobile screen simulation
+
+### Quick Start (fast tests first)
+
 ```bash
+# Login/logout tests (~2 min)
+npx playwright test login_and_logout --project=desktop-large --headed
+
+# Subscriptions CRUD tests (~2 min)
+npx playwright test subscriptions --project=desktop-large --headed
+
+# All tests
 npx playwright test --project=desktop-large --headed
 ```
 
-Run all tests with mobile device simulation:
+### Additional Commands
+
 ```bash
+# Smoke tests - menu navigation with screenshots (~8 min)
+npx playwright test smoke_menu --project=desktop-small --headed
+
+# Mobile viewport
 MOBILE_DEVICE="iPhone 15 Pro Max" npx playwright test --project=mobile --headed
-```
 
-Run only login and logout tests:
-```bash
-npx playwright test login_and_logout
-```
-
-Run smoke tests for side menu in a small browser window:
-```bash
-npx playwright test smoke_menu --project=desktop-small
-```
-
-Run subscriptions (contacts) CRUD tests:
-```bash
-npx playwright test subscriptions --project=desktop-large --headed
-```
-
-View test report:
-```bash
+# View test report
 npx playwright show-report
-```
 
-Update reference screenshots:
-```bash
+# Update reference screenshots
 npx playwright test --update-snapshots --project=desktop-large
 ```
 
