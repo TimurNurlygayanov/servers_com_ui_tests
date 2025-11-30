@@ -1,7 +1,7 @@
 import { expect, Page, TestInfo, Browser, BrowserContext } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
-import { LoginPage, DashboardPage } from './pages';
+import { LoginPage } from './pages';
 
 /**
  * Get credentials from environment variables
@@ -64,10 +64,7 @@ export async function initSharedSession(
   session.page = await session.context.newPage();
 
   const loginPage = new LoginPage(session.page);
-  const dashboardPage = new DashboardPage(session.page);
-
   await loginPage.login(username, password);
-  await dashboardPage.waitForDashboardLoad();
 
   session.isInitialized = true;
 }

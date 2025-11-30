@@ -10,6 +10,8 @@ export class LoginPage extends BasePage {
   private readonly signInButton = this.page.getByRole('button', { name: 'Sign in' });
   private readonly allowAllButton = this.page.getByRole('button', { name: 'Allow all' });
   private readonly okButton = this.page.getByRole('button', { name: 'OK', exact: true });
+  // Dashboard indicator to confirm successful login
+  private readonly topUpButton = this.page.getByRole('button', { name: 'Top up' });
 
   constructor(page: Page) {
     super(page);
@@ -31,7 +33,16 @@ export class LoginPage extends BasePage {
   }
 
   /**
-   * Perform complete login flow
+   * Perform complete login flow including waiting for dashboard to load.
+   *
+   * This method handles the full authentication flow:
+   * 1. Navigate to login page
+   * 2. Dismiss cookie/consent popup
+   * 3. Fill credentials and submit
+   * 4. Wait for dashboard to fully load
+   *
+   * @param email - User email address
+   * @param password - User password
    */
   async login(email: string, password: string) {
     await this.page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -39,7 +50,7 @@ export class LoginPage extends BasePage {
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await this.signInButton.click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await expect(this.topUpButton).toBeVisible({ timeout: 60000 });
   }
 
   /**

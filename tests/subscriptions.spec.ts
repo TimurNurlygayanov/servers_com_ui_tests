@@ -1,7 +1,6 @@
 import { test, Page } from '@playwright/test';
 import {
   LoginPage,
-  DashboardPage,
   SideMenuComponent,
   AccountSettingsPage,
   NewContactPage,
@@ -18,7 +17,6 @@ let contactInfo: ContactInfoPage;
 async function login(page: Page) {
   const { username, password } = getCredentials();
   await new LoginPage(page).login(username, password);
-  await new DashboardPage(page).waitForDashboardLoad();
 
   sideMenu = new SideMenuComponent(page);
   accountSettings = new AccountSettingsPage(page);
@@ -30,6 +28,7 @@ async function goToAccountSettings() {
   await sideMenu.navigateTo(['Account Settings']);
 }
 
+// We have to refresh the page to get latest data about Subscriptions
 async function refreshAccountSettings() {
   await goToAccountSettings();
   await accountSettings.reloadPage();

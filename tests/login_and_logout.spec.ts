@@ -21,10 +21,8 @@ test.describe('Authentication', () => {
     const context = await browser.newContext();
     const page = await context.newPage();
     const loginPage = new LoginPage(page);
-    const dashboardPage = new DashboardPage(page);
 
     await loginPage.login(username, password);
-    await dashboardPage.waitForDashboardLoad();
 
     const storageState = await context.storageState();
     await context.close();
@@ -49,7 +47,6 @@ test.describe('Authentication', () => {
 
     // Login
     await loginPage.login(username, password);
-    await dashboardPage.waitForDashboardLoad();
     const postLoginUrl = page.url();
 
     // Logout
