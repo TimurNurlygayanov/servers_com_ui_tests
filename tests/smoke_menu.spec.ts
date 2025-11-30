@@ -25,7 +25,7 @@ test.describe('Smoke Tests - Main Menu Navigation', () => {
   });
 
   for (const testCase of TEST_CASES) {
-    test(`should navigate to ${testCase.testName}`, async ({}, testInfo) => {
+    test(`should navigate to ${testCase.testName}`, async (_, testInfo) => {
       await sideMenu.navigateTo(testCase.menuNames, testCase.subItemNames);
       await verifyPageScreenshot(session.page, testInfo);
     });

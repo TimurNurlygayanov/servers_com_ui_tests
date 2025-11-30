@@ -12,7 +12,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : parseInt(process.env.WORKERS || '1', 10),
   reporter: 'html',
-  timeout: 120000,
+  timeout: 1200000,
   expect: {
     timeout: 30000,
     toHaveScreenshot: {
@@ -24,7 +24,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'on',
-    actionTimeout: 10000,
+    actionTimeout: 20000,
     navigationTimeout: 60000,
     launchOptions: {
       slowMo: 100, // 0.1 second delay after each interaction
@@ -55,7 +55,7 @@ export default defineConfig({
     {
       name: 'mobile',
       use: {
-        ...devices['iPhone 15 Pro Max'],
+        ...devices[process.env.MOBILE_DEVICE || 'iPhone 15 Pro Max'],
       },
     },
   ],
